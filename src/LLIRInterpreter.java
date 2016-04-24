@@ -203,7 +203,7 @@ public class LLIRInterpreter {
     }
 
     private void runInstruction() throws RuntimeError {
-        if (++instLimit >= instLimit) throw new RuntimeError("instruction limit exceeded");
+        if (++cntInst >= instLimit) throw new RuntimeError("instruction limit exceeded");
         switch (curInst.operator) {
             case "load":
                 int addr = readSrc(curInst.op1);
@@ -379,7 +379,7 @@ public class LLIRInterpreter {
 
     public static void main(String[] args) throws IOException {
         LLIRInterpreter vm = new LLIRInterpreter(System.in);
-        vm.setInstructionLimit(1<<20);
+        vm.setInstructionLimit(1<<26);
         vm.run();
         System.out.println("exitcode:  " + vm.getExitcode());
         System.out.println("exception: " + vm.exitException());

@@ -34,11 +34,13 @@ Return true if the virtual machine is terminated by an exception.
 - A block must end with a jump instruction, i.e., fall-through is not allowed.
 - Function call: `$dest = call name $arg1 $arg2 ...`.
 - Use `func name $arg1 $arg2 ... {` to start a function definition. `func` can be replaced with `void` if no return value.
+- The entry block of a function is the first block in it.
 - Heap allocation: `$dest = alloc $size` will acquire `$size` bytes from heap.
 
 ## Brief Introduction to VM
 
 - All registers are 32-bit integer register.
+- All integers are signed integer.
 - Functions do not share any register.
 - Will terminate if memory access violation occurs.
 - Will terminate if arithmetic error occurs.
