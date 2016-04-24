@@ -58,8 +58,8 @@ Jump Instruction:
     br $cond %ifTrue %ifFalse
 
 Memory Access Instruction:
-    store size $addr $src
-    $dest = load size $addr
+    store size $addr $src offset    // M[$addr+offset : $addr+offset+size-1] <- $src
+    $dest = load size $addr offset  // $dest <- M[$addr+offset : $addr+offset+size-1]
     $dest = alloc $size
 
 Function Call Instruction:
@@ -81,9 +81,9 @@ Bitwise Instruction:
     $dest = shl $src1 $src2
     $dest = shr $src1 $src2
     $dest = and $src1 $src2
-    $dest = or $src1 $src2
     $dest = xor $src1 $src2
-    $dest = not $src1 $src2
+    $dest = or $src1 $src2
+    $dest = not $src         // bitwise not
 
 Condition Set Instruction:
     $dest = slt $src1 $src2

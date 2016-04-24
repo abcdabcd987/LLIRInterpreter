@@ -14,6 +14,7 @@ public class LLIRInterpreter {
         String op1;
         String op2;
         int size;           // for `load` / `store`
+        int offset;         // for `load` / `store`
         List<String> args;  // for `call`
 
         int lineno;
@@ -111,11 +112,13 @@ public class LLIRInterpreter {
                 inst.op1 = words.get(2);
                 inst.op2 = words.get(3);
                 inst.size = Integer.valueOf(words.get(1));
+                inst.offset = Integer.valueOf(words.get(4));
                 return;
             case "load":
                 inst.dest = split[0].trim();
                 inst.op1 = words.get(2);
                 inst.size = Integer.valueOf(words.get(1));
+                inst.offset = Integer.valueOf(words.get(3));
                 return;
             case "alloc":
                 inst.dest = split[0].trim();
@@ -206,14 +209,14 @@ public class LLIRInterpreter {
         if (++cntInst >= instLimit) throw new RuntimeError("instruction limit exceeded");
         switch (curInst.operator) {
             case "load":
-                int addr = readSrc(curInst.op1);
+                int addr = readSrc(curInst.op1) + curInst.offset;
                 int res = 0;
                 for (int i = 0; i < curInst.size; ++i) res = (res << 8) | memoryRead(addr+i);
                 registerWrite(curInst.dest, res);
                 return;
 
             case "store":
-                int address = readSrc(curInst.op1);
+                int address = readSrc(curInst.op1) + curInst.offset;
                 int data = readSrc(curInst.op2);
                 for (int i = curInst.size-1; i >= 0; --i) {
                     memoryWrite(address+i, (byte)(data & 0xFF));
