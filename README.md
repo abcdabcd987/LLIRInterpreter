@@ -3,7 +3,7 @@ Single file interpreter (or naive virtual machine) for my intermediate represent
 
 ## How to use?
 
-You can use `LLIRInterpreter::main`, or you can import it to your code and use it as a library.
+You can use [`LLIRInterpreter::main`](https://github.com/abcdabcd987/LLIRInterpreter/blob/master/src/LLIRInterpreter.java#L380), or you can copy [`src/LLIRInterpreter.java`](https://github.com/abcdabcd987/LLIRInterpreter/blob/master/src/LLIRInterpreter.java) to your code and use it as a library.
 
 ## API
 
@@ -39,7 +39,11 @@ Return true if the virtual machine is terminated by an exception.
 ## Brief Introduction to VM
 
 - All registers are 32-bit integer register.
-- Will terminate when memory access violation or arithmetic error.
+- Functions do not share any register.
+- Will terminate if memory access violation occurs.
+- Will terminate if arithmetic error occurs.
+- Will terminate if you try to read a register that has no value.
+- Execution starts at `main` function.
 
 ## Instruction Set
 
